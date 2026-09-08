@@ -13,6 +13,8 @@ enum WeeklyGameRegistrationError: LocalizedError, Equatable {
     case alreadyRegistered
     case memberNotFound
     case gameNotFound
+    case registrationNotFound
+    case waitlistEmpty
 
     var errorDescription: String? {
         switch self {
@@ -30,6 +32,12 @@ enum WeeklyGameRegistrationError: LocalizedError, Equatable {
 
         case .gameNotFound:
             return "The weekly football game could not be found."
+
+        case .registrationNotFound:
+            return "No active registration could be found for this member."
+
+        case .waitlistEmpty:
+            return "There are no waitlisted players for this game."
         }
     }
 }

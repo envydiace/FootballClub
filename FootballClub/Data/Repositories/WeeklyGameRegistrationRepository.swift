@@ -8,7 +8,10 @@
 import Foundation
 
 protocol WeeklyGameRegistrationRepository {
-    func registrations(for weeklyGameID: UUID) -> [WeeklyGameRegistration]
+
+    func registrations(
+        for weeklyGameID: UUID
+    ) -> [WeeklyGameRegistration]
 
     func registration(
         for clubMemberID: UUID,
@@ -16,4 +19,6 @@ protocol WeeklyGameRegistrationRepository {
     ) -> WeeklyGameRegistration?
 
     func save(_ registration: WeeklyGameRegistration)
+
+    func update(_ registration: WeeklyGameRegistration)
 }

@@ -35,4 +35,14 @@ final class InMemoryWeeklyGameRegistrationRepository: WeeklyGameRegistrationRepo
     func save(_ registration: WeeklyGameRegistration) {
         storedRegistrations.append(registration)
     }
+    
+    func update(_ registration: WeeklyGameRegistration) {
+        guard let index = storedRegistrations.firstIndex(
+            where: { $0.id == registration.id }
+        ) else {
+            return
+        }
+
+        storedRegistrations[index] = registration
+    }
 }
