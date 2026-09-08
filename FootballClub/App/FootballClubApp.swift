@@ -9,9 +9,14 @@ import SwiftUI
 
 @main
 struct FootballClubApp: App {
+
+    private let dependencies = AppDependencies()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(
+                dependencies: dependencies
+            )
         }
     }
 }

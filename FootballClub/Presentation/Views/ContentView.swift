@@ -8,11 +8,18 @@
 import SwiftUI
 
 struct ContentView: View {
+
+    let dependencies: AppDependencies
+
     var body: some View {
-        UpcomingGamesView()
+        UpcomingGamesView(
+            dependencies: dependencies
+        )
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView(
+        dependencies: AppDependencies()
+    )
 }
