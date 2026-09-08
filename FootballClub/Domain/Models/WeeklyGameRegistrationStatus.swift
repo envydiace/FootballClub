@@ -5,7 +5,7 @@
 //  Created by Đức Anh on 7/9/26.
 //
 
-enum WeeklyGameRegistrationStatus {
+enum WeeklyGameRegistrationStatus: Equatable {
     case confirmed
     case waitlisted
     case cancelled
