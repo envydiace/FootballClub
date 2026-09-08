@@ -31,6 +31,21 @@ final class InMemoryWeeklyGameRegistrationRepository: WeeklyGameRegistrationRepo
             $0.registrationStatus != .cancelled
         }
     }
+    
+    func firstWaitlistedRegistration(
+        for weeklyGameID: UUID
+    ) -> WeeklyGameRegistration? {
+
+        storedRegistrations
+            .filter {
+                $0.weeklyGameID == weeklyGameID &&
+                $0.registrationStatus == .waitlisted
+            }
+            .sorted {
+                $0.registeredAt < $1.registeredAt
+            }
+            .first
+    }
 
     func save(_ registration: WeeklyGameRegistration) {
         storedRegistrations.append(registration)
