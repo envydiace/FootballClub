@@ -11,4 +11,5 @@ struct ClubMember: Identifiable {
     let id: UUID
     let fullName: String
     let emailAddress: String
+    let role: ClubMemberRole
 }

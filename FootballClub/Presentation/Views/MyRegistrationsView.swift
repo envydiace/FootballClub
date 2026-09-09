@@ -38,9 +38,10 @@ struct MyRegistrationsView: View {
                     )
                 } else {
                     ForEach(viewModel.items) { item in
+
                         VStack(
                             alignment: .leading,
-                            spacing: 6
+                            spacing: 8
                         ) {
 
                             Text(item.game.gameName)
@@ -62,7 +63,16 @@ struct MyRegistrationsView: View {
                                 : "Waitlisted"
                             )
                             .fontWeight(.semibold)
+
+                            Button(role: .destructive) {
+                                viewModel.cancelRegistration(
+                                    for: item.game
+                                )
+                            } label: {
+                                Text("Cancel Registration")
+                            }
                         }
+                        .padding(.vertical, 4)
                     }
                 }
             }

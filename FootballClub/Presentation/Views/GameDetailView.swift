@@ -96,16 +96,19 @@ struct GameDetailView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 
-                NavigationLink {
-                    ManageGameView(
-                        game: game,
-                        dependencies: dependencies
-                    )
-                } label: {
-                    Text("Manage Game")
-                        .frame(maxWidth: .infinity)
+                if dependencies.currentMember.role == .organiser {
+
+                    NavigationLink {
+                        ManageGameView(
+                            game: game,
+                            dependencies: dependencies
+                        )
+                    } label: {
+                        Text("Manage Game")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
                 }
-                .buttonStyle(.bordered)
 
                 if let message =
                     viewModel.registrationMessage {

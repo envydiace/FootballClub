@@ -20,6 +20,8 @@ final class MyRegistrationsViewModel {
         WeeklyFootballGameRepository
 
     private let currentMember: ClubMember
+    
+    private let cancelGameRegistrationUseCase: CancelGameRegistrationUseCase
 
     init(
         registrationRepository: WeeklyGameRegistrationRepository,
@@ -29,6 +31,11 @@ final class MyRegistrationsViewModel {
         self.registrationRepository = registrationRepository
         self.gameRepository = gameRepository
         self.currentMember = currentMember
+
+        self.cancelGameRegistrationUseCase =
+            CancelGameRegistrationUseCase(
+                repository: registrationRepository
+            )
     }
 
     func loadRegistrations() {
@@ -56,6 +63,22 @@ final class MyRegistrationsViewModel {
                 registration: registration,
                 game: game
             )
+        }
+    }
+    
+    func cancelRegistration(
+        for game: WeeklyFootballGame
+    ) {
+        do {
+            _ = try cancelGameRegistrationUseCase.execute(
+                member: currentMember,
+                game: game
+            )
+
+            loadRegistrations()
+
+        } catch {
+            print(error.localizedDescription)
         }
     }
 }

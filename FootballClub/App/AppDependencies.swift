@@ -33,6 +33,6 @@ final class AppDependencies {
                 members: members
             )
 
-        self.currentMember = members[0]
+        self.currentMember = members[1]
     }
 }

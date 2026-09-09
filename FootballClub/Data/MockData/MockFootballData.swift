@@ -37,19 +37,22 @@ enum MockFootballData {
         ClubMember(
             id: UUID(),
             fullName: "Alex Nguyen",
-            emailAddress: "alex@example.com"
+            emailAddress: "alex@example.com",
+            role: .member
+        ),
+
+        ClubMember(
+            id: UUID(),
+            fullName: "Sarah Wilson",
+            emailAddress: "sarah@example.com",
+            role: .organiser
         ),
 
         ClubMember(
             id: UUID(),
             fullName: "Sam Lee",
-            emailAddress: "sam@example.com"
-        ),
-
-        ClubMember(
-            id: UUID(),
-            fullName: "Jordan Smith",
-            emailAddress: "jordan@example.com"
+            emailAddress: "sam@example.com",
+            role: .member
         )
     ]
 }
