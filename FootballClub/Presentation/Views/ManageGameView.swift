@@ -32,97 +32,199 @@ struct ManageGameView: View {
     }
 
     var body: some View {
-        List {
+        ScrollView {
+            VStack(spacing: 16) {
 
-            Section("Game") {
+                // Game summary
                 VStack(
                     alignment: .leading,
-                    spacing: 6
+                    spacing: 10
                 ) {
                     Text(game.gameName)
-                        .font(.headline)
+                        .font(.title2)
+                        .fontWeight(.bold)
 
-                    Text(game.venueName)
-
-                    Text(
+                    Label(
                         game.kickOffAt.formatted(
                             date: .abbreviated,
                             time: .shortened
-                        )
+                        ),
+                        systemImage: "clock"
                     )
+
+                    Label(
+                        game.venueName,
+                        systemImage: "mappin.and.ellipse"
+                    )
+
+                    HStack {
+                        Text(
+                            "\(viewModel.confirmedPlayers.count)/\(game.playerCapacity) players"
+                        )
+
+                        Spacer()
+
+                        Text(
+                            "\(spotsLeft) spots left"
+                        )
+                    }
+                    .font(.subheadline)
                     .foregroundStyle(.secondary)
                 }
-            }
-
-            Section(
-                "Confirmed Players (\(viewModel.confirmedPlayers.count)/\(game.playerCapacity))"
-            ) {
-
-                if viewModel.confirmedPlayers.isEmpty {
-                    Text("No confirmed players")
-                        .foregroundStyle(.secondary)
-                } else {
-                    ForEach(viewModel.confirmedPlayers) { item in
-                        Label(
-                            item.member.fullName,
-                            systemImage: "checkmark.circle.fill"
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.background)
+                        .shadow(
+                            color: .black.opacity(0.08),
+                            radius: 4
                         )
-                    }
-                }
-            }
+                )
 
-            Section(
-                "Waitlist (\(viewModel.waitlistedPlayers.count))"
-            ) {
+                // Confirmed players
+                VStack(
+                    alignment: .leading,
+                    spacing: 10
+                ) {
+                    Text("Registered Players")
+                        .font(.headline)
 
-                if viewModel.waitlistedPlayers.isEmpty {
+                    if viewModel.confirmedPlayers.isEmpty {
+                        Text("No confirmed players")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(
+                            viewModel.confirmedPlayers
+                        ) { item in
 
-                    Text("Waitlist is empty")
-                        .foregroundStyle(.secondary)
-
-                } else {
-
-                    ForEach(
-                        Array(viewModel.waitlistedPlayers.enumerated()),
-                        id: \.element.id
-                    ) { index, item in
-
-                        HStack {
-                            VStack(alignment: .leading) {
+                            HStack {
                                 Text(item.member.fullName)
-                                Text("Waitlist #\(index + 1)")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
+
+                                Spacer()
+
+                                Image(
+                                    systemName:
+                                        "checkmark.circle.fill"
+                                )
+                                .foregroundStyle(.green)
                             }
-
-                            Spacer()
-
-                            Image(systemName: "clock")
                         }
                     }
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.background)
+                        .shadow(
+                            color: .black.opacity(0.08),
+                            radius: 4
+                        )
+                )
 
-                    Button(
-                        "Promote First Waitlisted Player"
-                    ) {
+                // Waitlist
+                VStack(
+                    alignment: .leading,
+                    spacing: 10
+                ) {
+                    Text("Waitlist")
+                        .font(.headline)
+
+                    if viewModel.waitlistedPlayers.isEmpty {
+                        Text("Waitlist is empty")
+                            .foregroundStyle(.secondary)
+                    } else {
+                        ForEach(
+                            Array(
+                                viewModel.waitlistedPlayers.enumerated()
+                            ),
+                            id: \.element.id
+                        ) { index, item in
+
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text(item.member.fullName)
+
+                                    Text(
+                                        "Waitlist #\(index + 1)"
+                                    )
+                                    .font(.caption)
+                                    .foregroundStyle(.secondary)
+                                }
+
+                                Spacer()
+
+                                Image(systemName: "clock")
+                            }
+                        }
+                    }
+                }
+                .padding()
+                .background(
+                    RoundedRectangle(cornerRadius: 12)
+                        .fill(.background)
+                        .shadow(
+                            color: .black.opacity(0.08),
+                            radius: 4
+                        )
+                )
+
+                // Actions
+                VStack(spacing: 10) {
+
+                    Button {
                         viewModel
                             .promoteFirstWaitlistedPlayer(
                                 for: game
                             )
+                    } label: {
+                        Text("Promote First Waitlisted Player")
+                            .frame(maxWidth: .infinity)
                     }
-                }
-            }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(
+                        viewModel.waitlistedPlayers.isEmpty
+                    )
 
-            if let message = viewModel.message {
-                Section {
+                    Button {
+                        // Placeholder for future organiser action
+                    } label: {
+                        Text("Edit Game")
+                            .frame(maxWidth: .infinity)
+                    }
+                    .buttonStyle(.bordered)
+                }
+
+                if let message = viewModel.message {
                     Text(message)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
                 }
             }
+            .padding()
         }
         .navigationTitle("Manage Game")
+        .navigationBarTitleDisplayMode(.inline)
         .onAppear {
             viewModel.loadRegistrations(
                 for: game
             )
         }
+    }
+
+    private var spotsLeft: Int {
+        max(
+            game.playerCapacity -
+            viewModel.confirmedPlayers.count,
+            0
+        )
+    }
+}
+
+#Preview {
+    NavigationStack {
+        ManageGameView(
+            game: MockFootballData.weeklyGames[0],
+            dependencies: AppDependencies()
+        )
     }
 }
