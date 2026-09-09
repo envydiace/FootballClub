@@ -13,7 +13,12 @@ protocol WeeklyGameRegistrationRepository {
         for weeklyGameID: UUID
     ) -> [WeeklyGameRegistration]
 
-    func registration(
+    func activeRegistration(
+        for clubMemberID: UUID,
+        in weeklyGameID: UUID
+    ) -> WeeklyGameRegistration?
+    
+    func registrationIncludingCancelled(
         for clubMemberID: UUID,
         in weeklyGameID: UUID
     ) -> WeeklyGameRegistration?

@@ -71,6 +71,7 @@ struct MyRegistrationsView: View {
                             } label: {
                                 Text("Cancel Registration")
                             }
+                            .buttonStyle(.borderless)
                         }
                         .padding(.vertical, 4)
                     }

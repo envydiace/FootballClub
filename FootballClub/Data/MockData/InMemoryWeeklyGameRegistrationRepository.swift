@@ -10,6 +10,12 @@ import Foundation
 final class InMemoryWeeklyGameRegistrationRepository: WeeklyGameRegistrationRepository {
 
     private var storedRegistrations: [WeeklyGameRegistration] = []
+    
+    init(
+        registrations: [WeeklyGameRegistration] = []
+    ) {
+        self.storedRegistrations = registrations
+    }
 
     func registrations(
         for weeklyGameID: UUID
@@ -20,7 +26,7 @@ final class InMemoryWeeklyGameRegistrationRepository: WeeklyGameRegistrationRepo
         }
     }
 
-    func registration(
+    func activeRegistration(
         for clubMemberID: UUID,
         in weeklyGameID: UUID
     ) -> WeeklyGameRegistration? {
@@ -29,6 +35,17 @@ final class InMemoryWeeklyGameRegistrationRepository: WeeklyGameRegistrationRepo
             $0.clubMemberID == clubMemberID &&
             $0.weeklyGameID == weeklyGameID &&
             $0.registrationStatus != .cancelled
+        }
+    }
+    
+    func registrationIncludingCancelled(
+        for clubMemberID: UUID,
+        in weeklyGameID: UUID
+    ) -> WeeklyGameRegistration? {
+
+        storedRegistrations.first {
+            $0.clubMemberID == clubMemberID &&
+            $0.weeklyGameID == weeklyGameID
         }
     }
     

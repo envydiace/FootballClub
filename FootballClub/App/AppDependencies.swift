@@ -21,7 +21,9 @@ final class AppDependencies {
         let members = MockFootballData.members
 
         self.registrationRepository =
-            InMemoryWeeklyGameRegistrationRepository()
+            InMemoryWeeklyGameRegistrationRepository(
+                registrations: MockFootballData.registrations
+            )
 
         self.gameRepository =
             InMemoryWeeklyFootballGameRepository(

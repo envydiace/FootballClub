@@ -11,56 +11,51 @@ import Observation
 @Observable
 final class GameDetailViewModel {
 
-    var registrationMessage: String?
-    var registrationSucceeded = false
+    var currentRegistration: WeeklyGameRegistration?
+    var errorMessage: String?
 
-    private let registerForGameUseCase:
-        RegisterForGameUseCase
-
+    private let repository: WeeklyGameRegistrationRepository
+    private let registerForGameUseCase: RegisterForGameUseCase
     private let currentMember: ClubMember
 
     init(
         repository: WeeklyGameRegistrationRepository,
         currentMember: ClubMember
     ) {
+        self.repository = repository
+        self.currentMember = currentMember
+
         self.registerForGameUseCase =
             RegisterForGameUseCase(
                 repository: repository
             )
+    }
 
-        self.currentMember = currentMember
+    func loadCurrentRegistration(
+        for game: WeeklyFootballGame
+    ) {
+        currentRegistration = repository.registrationIncludingCancelled(
+            for: currentMember.id,
+            in: game.id
+        )
+
+        errorMessage = nil
     }
 
     func register(
         for game: WeeklyFootballGame
     ) {
         do {
-            let registration =
+            currentRegistration =
                 try registerForGameUseCase.execute(
                     member: currentMember,
                     game: game
                 )
 
-            registrationSucceeded = true
-
-            switch registration.registrationStatus {
-            case .confirmed:
-                registrationMessage =
-                    "You are confirmed for this game."
-
-            case .waitlisted:
-                registrationMessage =
-                    "The game is full. You have been added to the waitlist."
-
-            case .cancelled:
-                registrationMessage =
-                    "Registration cancelled."
-            }
+            errorMessage = nil
 
         } catch {
-            registrationSucceeded = false
-            registrationMessage =
-                error.localizedDescription
+            errorMessage = error.localizedDescription
         }
     }
 }

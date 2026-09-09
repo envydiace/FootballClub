@@ -20,7 +20,7 @@ struct CancelGameRegistrationUseCase {
         game: WeeklyFootballGame
     ) throws -> WeeklyGameRegistration {
 
-        guard var registration = repository.registration(
+        guard var registration = repository.activeRegistration(
             for: member.id,
             in: game.id
         ) else {

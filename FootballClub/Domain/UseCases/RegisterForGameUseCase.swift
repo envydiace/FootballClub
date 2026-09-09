@@ -29,7 +29,7 @@ struct RegisterForGameUseCase {
             throw WeeklyGameRegistrationError.registrationClosed
         }
 
-        if repository.registration(
+        if repository.activeRegistration(
             for: member.id,
             in: game.id
         ) != nil {

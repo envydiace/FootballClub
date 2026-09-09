@@ -110,18 +110,35 @@ struct GameDetailView: View {
                     .buttonStyle(.bordered)
                 }
 
-                if let message =
-                    viewModel.registrationMessage {
+                if let registration = viewModel.currentRegistration {
 
-                    Text(message)
-                        .foregroundStyle(
-                            viewModel.registrationSucceeded
-                            ? .green
-                            : .red
-                        )
+                    switch registration.registrationStatus {
+
+                    case .confirmed:
+                        Text("You are confirmed for this game.")
+                            .foregroundStyle(.green)
+
+                    case .waitlisted:
+                        Text("The game is full. You have been added to the waitlist.")
+                            .foregroundStyle(.orange)
+
+                    case .cancelled:
+                        Text("You have cancelled your registration for this game.")
+                            .foregroundStyle(.red)
+                    }
+
+                } else if let errorMessage = viewModel.errorMessage {
+
+                    Text(errorMessage)
+                        .foregroundStyle(.red)
                 }
             }
             .padding()
+        }
+        .onAppear {
+            viewModel.loadCurrentRegistration(
+                for: game
+            )
         }
         .navigationTitle("Game Details")
         .navigationBarTitleDisplayMode(.inline)

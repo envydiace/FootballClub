@@ -16,7 +16,7 @@ enum MockFootballData {
             venueName: "Sydney Football Park",
             kickOffAt: Date().addingTimeInterval(86_400),
             finishesAt: Date().addingTimeInterval(90_000),
-            playerCapacity: 20,
+            playerCapacity: 1,
             registrationOpensAt: Date().addingTimeInterval(-86_400),
             registrationClosesAt: Date().addingTimeInterval(72_000)
         ),
@@ -53,6 +53,16 @@ enum MockFootballData {
             fullName: "Sam Lee",
             emailAddress: "sam@example.com",
             role: .member
+        )
+    ]
+    
+    static let registrations: [WeeklyGameRegistration] = [
+        WeeklyGameRegistration(
+            id: UUID(),
+            clubMemberID: members[0].id,
+            weeklyGameID: weeklyGames[0].id,
+            registrationStatus: .confirmed,
+            registeredAt: Date()
         )
     ]
 }
