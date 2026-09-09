@@ -21,6 +21,10 @@ protocol WeeklyGameRegistrationRepository {
     func firstWaitlistedRegistration(
         for weeklyGameID: UUID
     ) -> WeeklyGameRegistration?
+    
+    func registrationsForMember(
+        _ clubMemberID: UUID
+    ) -> [WeeklyGameRegistration]
 
     func save(_ registration: WeeklyGameRegistration)
 

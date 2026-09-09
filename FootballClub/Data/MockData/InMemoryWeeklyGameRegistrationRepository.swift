@@ -46,6 +46,15 @@ final class InMemoryWeeklyGameRegistrationRepository: WeeklyGameRegistrationRepo
             }
             .first
     }
+    
+    func registrationsForMember(
+        _ clubMemberID: UUID
+    ) -> [WeeklyGameRegistration] {
+
+        storedRegistrations.filter {
+            $0.clubMemberID == clubMemberID
+        }
+    }
 
     func save(_ registration: WeeklyGameRegistration) {
         storedRegistrations.append(registration)

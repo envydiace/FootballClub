@@ -12,9 +12,28 @@ struct ContentView: View {
     let dependencies: AppDependencies
 
     var body: some View {
-        UpcomingGamesView(
-            dependencies: dependencies
-        )
+        TabView {
+
+            UpcomingGamesView(
+                dependencies: dependencies
+            )
+            .tabItem {
+                Label(
+                    "Games",
+                    systemImage: "calendar"
+                )
+            }
+
+            MyRegistrationsView(
+                dependencies: dependencies
+            )
+            .tabItem {
+                Label(
+                    "My Registrations",
+                    systemImage: "person.crop.circle.badge.checkmark"
+                )
+            }
+        }
     }
 }
 
