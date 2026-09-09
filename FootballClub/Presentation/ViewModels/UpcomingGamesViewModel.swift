@@ -13,11 +13,16 @@ final class UpcomingGamesViewModel {
 
     var games: [WeeklyFootballGame] = []
 
-    init() {
+    private let repository: WeeklyFootballGameRepository
+
+    init(
+        repository: WeeklyFootballGameRepository
+    ) {
+        self.repository = repository
         loadGames()
     }
 
     private func loadGames() {
-        games = MockFootballData.weeklyGames
+        games = repository.allGames()
     }
 }

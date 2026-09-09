@@ -11,8 +11,17 @@ struct UpcomingGamesView: View {
 
     let dependencies: AppDependencies
 
-    @State private var viewModel =
-        UpcomingGamesViewModel()
+    @State private var viewModel: UpcomingGamesViewModel
+
+    init(dependencies: AppDependencies) {
+        self.dependencies = dependencies
+
+        _viewModel = State(
+            initialValue: UpcomingGamesViewModel(
+                repository: dependencies.gameRepository
+            )
+        )
+    }
 
     var body: some View {
         NavigationStack {

@@ -18,7 +18,8 @@ struct MyRegistrationsView: View {
 
         _viewModel = State(
             initialValue: MyRegistrationsViewModel(
-                repository: dependencies.registrationRepository,
+                registrationRepository: dependencies.registrationRepository,
+                gameRepository: dependencies.gameRepository,
                 currentMember: dependencies.currentMember
             )
         )
@@ -27,7 +28,7 @@ struct MyRegistrationsView: View {
     var body: some View {
         NavigationStack {
             List {
-                if viewModel.registrations.isEmpty {
+                if viewModel.items.isEmpty {
                     ContentUnavailableView(
                         "No Registrations",
                         systemImage: "calendar.badge.exclamationmark",
@@ -36,22 +37,31 @@ struct MyRegistrationsView: View {
                         )
                     )
                 } else {
-                    ForEach(viewModel.registrations) { registration in
-                        VStack(alignment: .leading, spacing: 6) {
+                    ForEach(viewModel.items) { item in
+                        VStack(
+                            alignment: .leading,
+                            spacing: 6
+                        ) {
 
-                            Text("Weekly Game")
+                            Text(item.game.gameName)
                                 .font(.headline)
 
+                            Text(item.game.venueName)
+
                             Text(
-                                registration.registrationStatus == .confirmed
+                                item.game.kickOffAt.formatted(
+                                    date: .abbreviated,
+                                    time: .shortened
+                                )
+                            )
+                            .foregroundStyle(.secondary)
+
+                            Text(
+                                item.registration.registrationStatus == .confirmed
                                 ? "Confirmed"
                                 : "Waitlisted"
                             )
-                            .foregroundStyle(
-                                registration.registrationStatus == .confirmed
-                                ? .green
-                                : .orange
-                            )
+                            .fontWeight(.semibold)
                         }
                     }
                 }

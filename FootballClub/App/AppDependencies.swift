@@ -10,12 +10,19 @@ import Foundation
 final class AppDependencies {
 
     let registrationRepository: InMemoryWeeklyGameRegistrationRepository
-
+    let gameRepository: InMemoryWeeklyFootballGameRepository
     let currentMember: ClubMember
 
     init() {
+        let games = MockFootballData.weeklyGames
+
         self.registrationRepository =
             InMemoryWeeklyGameRegistrationRepository()
+
+        self.gameRepository =
+            InMemoryWeeklyFootballGameRepository(
+                games: games
+            )
 
         self.currentMember = ClubMember(
             id: UUID(),
