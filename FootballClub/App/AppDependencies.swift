@@ -11,10 +11,14 @@ final class AppDependencies {
 
     let registrationRepository: InMemoryWeeklyGameRegistrationRepository
     let gameRepository: InMemoryWeeklyFootballGameRepository
+    let memberRepository: InMemoryClubMemberRepository
+
     let currentMember: ClubMember
 
     init() {
+
         let games = MockFootballData.weeklyGames
+        let members = MockFootballData.members
 
         self.registrationRepository =
             InMemoryWeeklyGameRegistrationRepository()
@@ -24,10 +28,11 @@ final class AppDependencies {
                 games: games
             )
 
-        self.currentMember = ClubMember(
-            id: UUID(),
-            fullName: "Alex Nguyen",
-            emailAddress: "alex@example.com"
-        )
+        self.memberRepository =
+            InMemoryClubMemberRepository(
+                members: members
+            )
+
+        self.currentMember = members[0]
     }
 }

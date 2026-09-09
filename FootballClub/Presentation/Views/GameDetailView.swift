@@ -95,6 +95,17 @@ struct GameDetailView: View {
                         .padding()
                 }
                 .buttonStyle(.borderedProminent)
+                
+                NavigationLink {
+                    ManageGameView(
+                        game: game,
+                        dependencies: dependencies
+                    )
+                } label: {
+                    Text("Manage Game")
+                        .frame(maxWidth: .infinity)
+                }
+                .buttonStyle(.bordered)
 
                 if let message =
                     viewModel.registrationMessage {

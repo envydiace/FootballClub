@@ -32,4 +32,24 @@ enum MockFootballData {
             registrationClosesAt: Date().addingTimeInterval(150_000)
         )
     ]
+    
+    static let members: [ClubMember] = [
+        ClubMember(
+            id: UUID(),
+            fullName: "Alex Nguyen",
+            emailAddress: "alex@example.com"
+        ),
+
+        ClubMember(
+            id: UUID(),
+            fullName: "Sam Lee",
+            emailAddress: "sam@example.com"
+        ),
+
+        ClubMember(
+            id: UUID(),
+            fullName: "Jordan Smith",
+            emailAddress: "jordan@example.com"
+        )
+    ]
 }
