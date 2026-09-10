@@ -5,36 +5,45 @@
 //  Created by Đức Anh on 9/9/26.
 //
 
-import Foundation
-
 final class AppDependencies {
 
     let registrationRepository: InMemoryWeeklyGameRegistrationRepository
     let gameRepository: InMemoryWeeklyFootballGameRepository
     let memberRepository: InMemoryClubMemberRepository
 
-    let currentMember: ClubMember
+    var currentMember: ClubMember
 
     init() {
-
         let games = MockFootballData.weeklyGames
         let members = MockFootballData.members
 
-        self.registrationRepository =
+        registrationRepository =
             InMemoryWeeklyGameRegistrationRepository(
                 registrations: MockFootballData.registrations
             )
 
-        self.gameRepository =
+        gameRepository =
             InMemoryWeeklyFootballGameRepository(
                 games: games
             )
 
-        self.memberRepository =
+        memberRepository =
             InMemoryClubMemberRepository(
                 members: members
             )
 
-        self.currentMember = members[1]
+        currentMember = members[0]
+    }
+
+    func switchToMember() {
+        currentMember = MockFootballData.members.first {
+            $0.role == .member
+        }!
+    }
+
+    func switchToOrganiser() {
+        currentMember = MockFootballData.members.first {
+            $0.role == .organiser
+        }!
     }
 }

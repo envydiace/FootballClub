@@ -112,21 +112,21 @@ enum MockFootballData {
 
     static let registrations: [WeeklyGameRegistration] = [
 
-        // Alex confirmed for Sunday Football
+        // Alex waitlisted for Sunday Football
         WeeklyGameRegistration(
             id: UUID(),
             clubMemberID: members[0].id,
             weeklyGameID: weeklyGames[0].id,
-            registrationStatus: .confirmed,
+            registrationStatus: .waitlisted,
             registeredAt: Date().addingTimeInterval(-3_600)
         ),
 
-        // Sam waitlisted for Sunday Football
+        // Sam confirmed for Sunday Football
         WeeklyGameRegistration(
             id: UUID(),
             clubMemberID: members[2].id,
             weeklyGameID: weeklyGames[0].id,
-            registrationStatus: .waitlisted,
+            registrationStatus: .confirmed,
             registeredAt: Date().addingTimeInterval(-1_800)
         ),
 
