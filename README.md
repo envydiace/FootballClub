@@ -124,6 +124,7 @@ The current MVP uses in-memory implementations:
 MockFootballData provides predefined games, members, and registrations for development and testing.
 
 This structure keeps the MVP modular and testable, while allowing the in-memory data implementation to be replaced by persistent storage or a remote API in the future without requiring major changes to the SwiftUI views or domain business rules.
+
 --- 
 ## Setup and Testing Instructions
 
