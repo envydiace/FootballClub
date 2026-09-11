@@ -11,7 +11,7 @@ enum MockFootballData {
 
     static let weeklyGames: [WeeklyFootballGame] = [
 
-        // Game 1 - Full, Alex confirmed, Sam waitlisted
+        // Game 1 - Full, Sam confirmed, Alex waitlisted
         WeeklyFootballGame(
             id: UUID(),
             gameName: "Sunday Football",
