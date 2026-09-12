@@ -15,7 +15,8 @@ struct RegisterForGameUseCaseTests {
         ClubMember(
             id: UUID(),
             fullName: "Alex Nguyen",
-            emailAddress: "alex@example.com"
+            emailAddress: "alex@example.com",
+            role: .member
         )
     }
 

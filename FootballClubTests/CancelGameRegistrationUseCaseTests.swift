@@ -19,7 +19,8 @@ struct CancelGameRegistrationUseCaseTests {
         let member = ClubMember(
             id: UUID(),
             fullName: "Alex Nguyen",
-            emailAddress: "alex@example.com"
+            emailAddress: "alex@example.com",
+            role: .member
         )
 
         let game = WeeklyFootballGame(
@@ -65,7 +66,8 @@ struct CancelGameRegistrationUseCaseTests {
         let member = ClubMember(
             id: UUID(),
             fullName: "Alex Nguyen",
-            emailAddress: "alex@example.com"
+            emailAddress: "alex@example.com",
+            role: .member
         )
 
         let game = WeeklyFootballGame(
